@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <label>
+        이름:
+        <input type="text" v-model.lazy="mName" /> </label
+      ><br />
+      <p>색 선택:</p>
+      <label></label>
+        <input type="radio" value="red" v-model="mColor" />
+        빨강 </label
+      ><br />
+      <label>
+        <input type="radio" value="green" v-model="mColor" />
+        초록</label
+      ><br />
+      <label>
+        <input type="radio" value="blue" v-model="mColor" />
+        파랑 </label
+      ><br />
+      <label>
+        <input type="radio" value="yellow" v-model="mColor" />
+        노랑 </label
+      ><br />
+      <label>
+        <input type="radio" value="gray" v-model="mColor" />
+        회색 </label
+      ><br />
+      <label>
+        <input type="radio" value="white" v-model="mColor" />
+        흰색 </label
+      ><br />
+      <p>
+        내이름은 "{{mName}}"이고 좋아하는 색은
+        <span v-bind:style="{color:mColor, backgroundColor:bColor}"
+          >{{mColor}}</span
+        >입니다.
+      </p>
+    </div>
+    <script>
+      new Vue({
+        el: "#app",
+        data: {
+          mName: "",
+          mColor: "",
+          bColor: "violet",
+        },
+      });
+    </script>
+  </body>
+</html>

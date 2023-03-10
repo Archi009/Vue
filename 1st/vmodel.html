@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    <title>Document</title>
+  </head>
+
+  <body>
+    <!-- v-model이 있는 태그의 value를 가져와서 v-model로 지정한 변수에 담아준다!!!  -->
+    <div id="app">
+      <input type="text" v-model="myName" placeholder="이름" />
+      <p>나는 {{myName}}입니다</p>
+      <textarea v-model="myText"></textarea>
+      <p>문장 : {{myText}}</p>
+      <p>문자수 : {{myText.length}}</p>
+      <label>
+        체크박스의 상태 : {{myCheck}}
+        <input type="checkbox" v-model="myCheck" /> </label
+      ><br />
+
+      <label>
+        <input type="checkbox" v-model="myChecks" value="red" />
+        붉은색
+      </label>
+      <br />
+      <label>
+        <input type="checkbox" v-model="myChecks" value="green" />
+        초록색 </label
+      ><br />
+      <label>
+        <input type="checkbox" v-model="myChecks" value="blue" />
+        파란색
+      </label>
+
+      선택한 색 : {{myChecks}}
+      <br />
+      <label>
+        <input type="checkbox" v-model="myAgree" />
+        동의 합니다.
+      </label>
+      <button type="button" v-bind:disabled="myAgree==false">송신</button>
+      <button type="button" v-bind:disabled="!myAgree">송신</button>
+      <!-- myAgree 는 false 인데 checkbox를 눌러 true로 바뀌면 disavled속성이 false가 되어 버튼이 활성화 된다 -->
+      <br />
+      <br />
+
+      <label>
+        <input type="radio" value="red" v-model="picked" />
+        빨간색 </label
+      ><br />
+      <label>
+        <input type="radio" value="green" v-model="picked" />
+        초록색 </label
+      ><br />
+      <label>
+        <input type="radio" value="yellow" v-model="picked" />
+        노란색 </label
+      ><br />
+      {{picked}} 선택 <br />
+
+      <label>
+        <input type="radio" value="cat.jpg" v-model="fileName" />
+        고양이
+      </label>
+      <label>
+        <input type="radio" value="test.jpg" v-model="fileName" />
+        빵 </label
+      ><br />
+
+      <img v-bind:src="fileName" style="width: 300px" />
+    </div>
+    <script>
+      new Vue({
+        el: "#app",
+        data: {
+          myName: "",
+          myText: "오늘 날시가 따뜻",
+          myCheck: false,
+          myChecks: [],
+          myAgree: false,
+          picked: "red",
+          fileName: "",
+        },
+      });
+    </script>
+  </body>
+</html>

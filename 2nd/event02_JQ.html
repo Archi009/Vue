@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script
+      src="https://code.jquery.com/jquery-3.6.4.js"
+      integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E="
+      crossorigin="anonymous"
+    ></script>
+    <title>Document</title>
+  </head>
+
+  <body>
+    <div id="app2">
+      <!-- inpt 속성이 비어있으면 모든 (datalist)가 보이고 검색을 하면 해당되는 ㄷㅔ디터만 보이도록 -->
+      <input type="text" />
+      <ul></ul>
+    </div>
+    <script>
+      let dataList = ["설악산", "한라산", "북한산", "지리산", "백두산"];
+      $(document).ready(function () {
+        init();
+        //$('#app2 > input:text:eq(0)')
+        //id가 app2 인 dom 자식 중에 input type text인 자식 중에
+        //인덱스가 0인 자식을 가지고 와라
+        $("#app2 > input:text:eq(0)").on("change", changeData);
+
+        function changeData() {
+          //empyt 가진 내용을 깨끗이 해 주는것
+          $("#app2>ul:first").empty();
+          // $('#app2>ul:first').remove() 태그(돔)를 삭제 하겠다는것
+          let keyword = $("#app2 >input:text:eq(0)").val();
+
+          if (keyword != "") {
+            $(dataList).each(function (idx, val) {
+              if (val.match(keyword)) {
+                $("#app2>ul:first").append($("<li/>").text(val));
+              }
+            });
+          } else {
+            init();
+          }
+        }
+        function init() {
+          $(dataList).each(function (idx, val) {
+            $("#app2>ul").append($("<li/>").text(val));
+          });
+        }
+      });
+    </script>
+    <div id="app4">
+      <p v-bind:style="{backgroundColor : mixColor,color:mColor}">
+        {{mixColor}}
+      </p>
+      <input type="range" v-model="R" min="0" max="225" />
+      <input type="range" v-model="G" min="0" max="225" />
+      <input type="range" v-model="B" min="0" max="225" />
+    </div>
+    <script>
+      new Vue({
+        el: "#app4",
+        data: {
+          R: 255,
+          G: 150,
+          B: 100,
+        },
+        computed: {
+          mixColor: function () {
+            var ans = "RGB(" + this.R + "," + this.G + "," + this.B + ")";
+            return ans;
+          },
+          mColor: function () {
+            var ans =
+              "RGB(" +
+              (225 - this.R) +
+              "," +
+              (225 - this.G) +
+              "," +
+              (225 - this.B) +
+              ")";
+            return ans;
+          },
+        },
+      });
+    </script>
+  </body>
+</html>

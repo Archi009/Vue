@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.0"></script>
+    <title>Document</title>
+    <style>
+      .test {
+        font-size: 150%;
+        color: red;
+        background-color: yellow;
+      }
+      .test1 {
+        color: blue;
+        text-decoration: underline blue;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <a v-bind:href="naver">네이버로 연결</a>
+      <br />
+      <img v-bind:src="bbang" />강아지 표기<img />
+      <p v-bind:align="left">텍스트 왼쪽 정렬</p>
+      <p v-bind:align="right">텍스트 오른쪽 정렬</p>
+      <p v-bind:align="center">텍스트 가운데 정렬</p>
+      <p v-bind:style="{color:mColor}">인라인 스타일 글자색 빨간색</p>
+      <p v-bind:style="{fontSize:mSize}">인라인 스타일 글자 150% 크게</p>
+      <p
+        v-bind:style="{fontSize:mSize,color:mColor,backgroundColor:myBackColor}"
+      >
+        인라인 스타일로 글자크기 150% 빨간색 배경 노랑색
+      </p>
+      <p v-bind:class="test1">blue undrline 지정</p>
+      <p v-bind:class="test1">blue undrline,strik-through</p>
+    </div>
+
+    <script>
+      new Vue({
+        el: "#app",
+        data: {
+          naver: "https://www.naver.com",
+          bbang: "test.jpg",
+          left: "left",
+          right: "right",
+          center: "center",
+          mColor: "red",
+          mSize: "150%",
+          myBackColor: "yellow",
+          test: "test",
+          test1: "test1",
+        },
+      });
+    </script>
+  </body>
+</html>

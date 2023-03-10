@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <title>if</title>
+  </head>
+
+  <body>
+    <div id="app">
+      <label> <input type="checkbox" v-model="myVisible" />표시 </label>
+      <!-- if문을 통해서 true false 로 화면에 나오는것은 생겼다가 없어지는것이지 있던게 보이고 안 보이고가 아니다 -->
+      <!--show를 통해서 만든것은 style display none과 block을 반복하는것.-->
+      <p v-show="myVisible">showbox</p>
+      <p v-if="myVisible">if박스 on</p>
+      <p v-else>체크박스 off</p>
+
+      <!--클릭하면 없어지는 버튼-->
+      <button v-if="isShow" @click="good">좋아</button>
+      <br />
+      <br />
+      <br />
+      <!-- if문 안에 다양ㅇ한 태그를 사용하고 싶다면 template로 감싸 줘야 한다 -->
+      <template v-if="type=='A'">
+        <h1>template titles</h1>
+        <p>template p tag</p>
+      </template>
+      <template v-else>
+        <h1>else template titles</h1>
+        <p>else template p tag</p>
+      </template>
+
+      <p v-if="type =='A'">
+        <h1>template titels</h1>
+        <p>template p tag</p>
+      </p>
+      <p v-else-if="type=='B'">B</p>
+      <p v-else-if="type=='C'">C</p>
+      <p v-else>{{type+elsess}}</p>
+      <input v-model="type" />
+    </div>
+    <script>
+      new Vue({
+        el: "#app",
+        data: {
+          myVisible: false,
+          isShow: true,
+          type: "",
+          elsess: "입니다.",
+        },
+        methods: {
+          good: function () {
+            this.isShow = false;
+          },
+        },
+      });
+    </script>
+  </body>
+</html>

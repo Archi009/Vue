@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <title>Document</title>
+  </head>
+
+  <body>
+    <!-- 입력한 값의 형식을 바꾸는 방법 -->
+    <!-- lazy, number, trim-->
+    <!-- lazy 를 입력 하게 되면 값을 다 입력하고 엔터를 쳐야지만 변수값을 지정한다 -->
+    <div id="app">
+      <input v-model.lazy="myText" />
+      <p>입력 후 표시{{myText}}</p>
+      <!-- 일반적으로는 실시간을 값이 지정된다 -->
+      <input v-model="myText2" />
+      <p>입력 후 표시{{myText2}}</p>
+      <br />
+      <!-- number -->
+      <input v-model.number="myNumber" type="number" />
+      <p>100을 더해서 표시 {{100+myNumber}}</p>
+      <br />
+      <!-- trim -->
+      <input v-model.trim="myText3" />
+      <p>앞 뒤 공백 제거 : {{myText3}}</p>
+    </div>
+    <script>
+      new Vue({
+        el: "#app",
+        data: {
+          myText: "",
+          myText2: "",
+          myNumber: "0",
+          myText3: "",
+        },
+      });
+    </script>
+  </body>
+</html>

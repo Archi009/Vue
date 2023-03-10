@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <h1>제한 시간내에 문자 입력하기</h1>
+      <label>
+        금지 문자(,로 나누어 복수입력가능)
+        <input type="text" v-bind:disabled="on" v-model="banned" /> </label
+      ><br />
+      <label>
+        제한시간을 입력하세요(초)
+        <input type="text" v-bind:disabled="on" v-model.number="secSelceted" />
+        <button @click="submit" v-bind:disabled="on">시작</button>
+      </label>
+      <br />
+      <p>남은시간: {{reSec}}</p>
+      <textarea v-model="inputText" cols="30" rows="10"></textarea>
+      <p>{{countT}}개의 문자를 입력 하였습니다</p>
+      <p>별점 : {{countR}}(금지문자 1개당 12점)</p>
+    </div>
+    <script>
+      new Vue({
+        el: "#app",
+        data: {
+          reSec: 0,
+          on: false,
+          timerObj: "",
+          banned: "",
+          secSelceted: 0,
+          countT: 0,
+          countR: 0,
+          inputText: "",
+          pos: "",
+        },
+        // computed: {
+        //   countR: function () {
+        //     return this.inputText.length;
+        //   },
+        // },
+        methods: {
+          submit: function () {
+            clearInterval(this.timerObj); //
+            this.reSec = this.secSelceted;
+            this.timerObj = setInterval(() => {
+              this.reSec--;
+            }, 1000);
+
+            this.on = true;
+          },
+        },
+        watch: {
+          inputText: function () {
+            // var strCopy = this.banned.split(",");
+            // strCopy.forEach((item) => {
+            //   let pos = this.inputText.match(item);
+            //   if(pos!=null){
+            //     alert(this.pos+"는 금지어입니다.")
+            //     this.inputText=this.inputText.
+            //   }
+            // });
+            var pos = this.inputText.indexOf(this.banned);
+            if (pos >= 0) {
+              alert(this.banned + "는 입력할 수 없습니다.");
+              this.inputText = this.inputText.substr(0, pos);
+              this.reSec += 10;
+              this.countR += 12;
+              this.countR = this.inputText.length;
+            }
+          },
+          reSec: function () {
+            if (this.reSec <= 0) {
+              alert("제한시간이 다 됐습니다");
+              clearInterval(this.timerObj);
+              this.on = false;
+              this.rate = 0;
+            }
+          },
+        },
+      });
+    </script>
+  </body>
+</html>

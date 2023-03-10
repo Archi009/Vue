@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <title>Document</title>
+  </head>
+
+  <body>
+    <div id="daegu">
+      <input v-on:keyup.enter="showAlert" v-model="myText" />
+      <input v-on:keyup.enter.shift="showAlert2" v-model="myText" />
+      <p>{{myText}}</p>
+
+      <input v-model.number="first" /><input v-model.number="second" /><br />
+
+      <button @click="sum">덧셈계산</button>
+      <button @click="minus">뺄셈계산</button>
+      <button @click="multiple">곱셈계산</button>
+      <button @click="divide">나눗셈계산</button><br />
+      <p>결과는 {{result}}입니다</p>
+
+      <button @click="count2Up(10)">10씩 증가</button>
+      <button @click="count2Up(100)">100씩 증가</button>
+      <button @click="count2Up(1000)">1000씩 증가</button>
+      <p>{{result2}}</p>
+
+      <input v-model.number="a[0]" /><input v-model.number="a[1]" /><br />
+      <button @click="sum2">덧셈계산</button>
+      <p>{{result3}}</p>
+      <!-- 배열로 불러오는게 된다면 result 를 object로 정의 해서 결과값의 사칙연산도 가능하지 않을까? -->
+    </div>
+    <script>
+      new Vue({
+        el: "#daegu",
+        data: {
+          myText: "Hello",
+          first: 0,
+          second: 0,
+          result: 0,
+          result2: 0,
+          a: [],
+          result3: 0,
+        },
+        methods: {
+          showAlert: function () {
+            alert("Enter키를 눌렀습니다.");
+          },
+          showAlert2: function () {
+            alert("Enter+shift키를 눌렀습니다.");
+          },
+          sum: function () {
+            this.result = this.first + this.second;
+          },
+          minus: function () {
+            this.result = this.first - this.second;
+          },
+          multiple: function () {
+            this.result = this.first * this.second;
+          },
+          divide: function () {
+            this.result = this.first / this.second;
+          },
+          count2Up: function (value) {
+            this.result2 += value;
+          },
+          sum2: function () {
+            this.result3 = this.a[0] + this.a[1];
+          },
+        },
+      });
+    </script>
+  </body>
+</html>

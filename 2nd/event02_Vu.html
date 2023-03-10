@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app3">
+      <input type="text" v-model="findWord" />
+      <ul>
+        <li v-for="item in findItems">{{item}}</li>
+      </ul>
+    </div>
+    <script>
+      let myArray = ["설악산", "한라산", "북한산", "지리산", "백두산"];
+      new Vue({
+        el: "#app3",
+        data: {
+          findWord: "",
+          items: myArray,
+        },
+        computed: {
+          findItems: function () {
+            if (this.findWord) {
+              return this.items.filter(function (value) {
+                return value.indexOf(this.findWord) > -1;
+              }, this);
+            } else {
+              return this.items;
+            }
+          },
+        },
+      });
+      //myArray; 원본
+      //items; 카피 데이터를 가공해서 이용하는데, 이때 손상될 수 있으므로 카피본 사용
+      //finditems; li
+    </script>
+  </body>
+</html>

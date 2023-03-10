@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <p>금지문자는 {{forbiddentText}}</p>
+      <textarea v-model="inputText" cols="30" rows="10"></textarea>
+      <br />
+      <p>앞으로 {{restSec}}</p>
+      <button v-on:click="startTimer">START</button>
+    </div>
+    <script>
+      new Vue({
+        el: "#app",
+        data: {
+          restSec: 10,
+          forbiddentText: "안되",
+          inputText: "오늘은 날씨가 좋습니다.",
+          timerObj: null,
+        },
+        methods: {
+          startTimer: function () {
+            clearInterval(this.timerObj); //
+            this.restSec = 10;
+            this.timerObj = setInterval(() => {
+              //setInterval 이 실행 될때 마다 중복되지 않는 고유 ID가 반한되는데,
+              //이 덕에 절대 겹치지 않는 카운트가 생긴다 그럼 버튼을 눌렀을때 계속
+              //인터벌이 생성어  중복된 인터벌이 각각 구동되는데 이를 막기위해
+              //clearInterval을 해준다.!
+              //setInterval 주기(1000)마다 함수 내에 것을 실시하겠다
+              this.restSec--;
+            }, 1000);
+          },
+        },
+        //watch:변화 할 때 마다 내부를 사용 하겠다
+        watch: {
+          restSec: function () {
+            if (this.restSec <= 0) {
+              alert("제한 시간 입니다.");
+              clearInterval(this.timerObj);
+            }
+          },
+          inputText: function () {
+            var pos = this.inputText.indexOf(this.forbiddentText);
+            if (pos >= 0) {
+              alert(this.forbiddentText + "는 입력할 수 없습니다.");
+              this.inputText = this.inputText.substr(0, pos);
+            }
+          },
+        },
+      });
+    </script>
+  </body>
+</html>

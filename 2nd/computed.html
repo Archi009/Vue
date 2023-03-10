@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <title>Document</title>
+  </head>
+
+  <body>
+    <!-- computed 안 썻을때의 불편함 -->
+    <div id="app">
+      <!-- Vue computed 계산식을 태그에 쓰면 보기 불편하고 유지보수가 불편하여 computed 사용-->
+      <!-- 메소드는 실행을 시켜야만 동작하고 컴퓨티드는 그냥 둬도 실행됨 Ex) p v-text="printDate() " -->
+      <p>{{myText.substr(2,5).length}}</p>
+      <p>{{myPrice * 1.08 /3 + 5}}</p>
+    </div>
+    <script>
+      new Vue({
+        el: "#app",
+        data: {
+          myText: "안녕하세요 Vue.js 입니다.",
+          myPrice: 50,
+        },
+      });
+    </script>
+
+    <div id="app2">
+      <input type="number" v-model.number="price" />원 x
+      <input type="number" v-model.number="count" />개
+
+      <p>합계 {{sum}}원</p>
+      <p>세금 포함 {{taxIncluded}}</p>
+      <p>소비세 포함 금액 {{taxIncluded}}</p>
+    </div>
+
+    <script>
+      new Vue({
+        el: "#app2",
+        data: {
+          price: 100,
+          count: 2,
+        },
+        computed: {
+          taxIncluded: function () {
+            return this.sum * 1.08;
+          },
+          sum: function () {
+            return this.price * this.count;
+          },
+        },
+      });
+    </script>
+
+    <div id="app3">
+      <p>감상은 140자 이내로 입력해 주세여ㅛ.</p>
+      <textarea
+        v-model="myText"
+        cols="30"
+        rows="10"
+        v-bind:disabled="disTextArea"
+      ></textarea>
+      <p v-bind:style="{color:computedColor}">남은 글자는 {{remaing}}입니다</p>
+      <p v-text="printDate()"></p>
+      <button @click="getDate">날짜</button>
+
+      {{printDate}}
+    </div>
+
+    <script>
+      new Vue({
+        el: "#app3",
+        data: {
+          myText: "오늘 날씨가 좋습니다",
+        },
+        computed: {
+          remaing: function () {
+            return 140 - this.myText.length;
+          },
+          computedColor: function () {
+            let col = "green";
+            if (this.remaing < 20) {
+              col = "orange";
+            }
+            if (this.remaing < 10) {
+              col = "blue";
+            }
+            if (this.remaing <= 1) {
+              col = "red";
+            }
+            return col;
+          },
+          disTextArea: function () {
+            let value = false;
+            if (this.remaing < 1) {
+              value = ture;
+            }
+            return value;
+          },
+        },
+        methods: {
+          printDate: function () {
+            //1970년 01월 01일 ~현재 시간의 초를 가져옴
+            return "오늘 날짜 : " + Date.now();
+          },
+          getDate: function () {
+            alert(this.printDate());
+          },
+        },
+      });
+    </script>
+  </body>
+</html>

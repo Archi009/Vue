@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.0"></script>
+
+    <title>Document</title>
+  </head>
+  <body>
+    <!--  mustache 콧수염-->
+    <!-- {{  }} -->
+    <div id="app">
+      <p>{{myText}}</p>
+      <!-- v-text : 문자로 인식-->
+      <!-- <input type="text"> 의 타입과 같이 속성*값을 지정해주는 것-->
+      <!--innerText--><!--mustache와 같다-->
+      <p v-text="myText"></p>
+      <!-- v-html 태그가 존재하면 태그 인식 -->
+      <!-- innerHtml -->
+      <p v-html="myText"></p>
+      <!-- 디렉티브 v-text, v-html, v-on... -->
+      <button v-on:click="changeText">변경</button>
+    </div>
+    <script>
+      new Vue({
+        //인스턴스 생성
+        el: "#app", //아이디를 통해 뷰로 만든 부품을 가져다 붙일 곳을 정해준다
+        data: {
+          //위치에 넣어줄 데이터를 정의 해 준다
+          myText: "Hello!!", //이름으로 구분된 mustache 안에 데이터를 입력해준다
+        },
+        methods: {
+          changeText: function () {
+            this.myText = `<button type="button">추가 </vutton>`; //myText를 버튼 태그로 바꾸는 기능, v-text는 텍스트 그대로 가져오고 v-html은 태그를 표시 해준다
+          },
+        },
+      });
+    </script>
+  </body>
+</html>

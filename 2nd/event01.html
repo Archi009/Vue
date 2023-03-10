@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <title>Document</title>
+  </head>
+  <style>
+    .tag {
+      margin: 10px;
+      border: 1px solid gray;
+    }
+    span {
+      cursor: pointer;
+    }
+  </style>
+  <body>
+    <div id="app">
+      <!-- a 태그 이벤트 전파 중지 -->
+      <a
+        href="https://www.naver.com"
+        v-on:click="warn('Form cannot be submitted yet',$event)"
+        >submit</a
+      >
+    </div>
+    <div id="app2" v-bind:class="style">
+      <form
+        action="https://www.naver.com"
+        :class="style"
+        @click="printMessage('form태그 선택')"
+        v-on:submit.prevent
+      >
+        <!-- //onclick stop : 이 후에 이벤트 전파가 안된다. 즉 이 위의 form이벤트는 진행 되지 앟는다 (버블링과 캡쳐링을 막는다) -->
+        <!-- onclick once : 한번만 실행된다 -->
+        <div :class="style" v-on:click.stop="printMessage('div 태그 선택')">
+          <p v-bind:class="style" @click.once="printMessage('p태그 선택')">
+            <a
+              href="https://www.google.com"
+              :class="style"
+              v-on:click.prevent="printMessage('a태그 선택')"
+              >구글</a
+            >
+            <!-- prevent: 이벤트 중단 -->
+          </p>
+        </div>
+      </form>
+      <div :class="style">
+        <button @click="changeMessage($event), alertExcute()">
+          <span> 이벤트 핸들러 복수 실행 </span>
+        </button>
+      </div>
+    </div>
+    <script>
+      //이벤트 수식어 ->on 디렉티브(v-on)에 연결되는 이벤트 동작 제어
+      //.stop : 이벤트 버블링(이벤트 전파) 차단 (자식->부모로 전파되는 이벤트)
+      //.prevent : 기본 이벤트 중지(예를 들어 a 태그 htef 작동 안 하고 싶을 때)
+      //.self : Event 객체의 target == currentTarget 이벤트가 동작
+      //.once : 한 번 만 동작
+      //.capture :  이벤트 캑쳐링 ( 이벤트 전파 ) 중단(부목-> 자식으로 전파되는 이벤드)
+      new Vue({
+        el: "#app2",
+        data: {
+          style: "tag",
+          message: "",
+        },
+        methods: {
+          printMessage: function (message) {
+            this.message = message;
+            alert(message);
+          },
+          changeMessage: function (event) {
+            if (event) {
+              console.log(event.target); // 실제 클릭한 대상 Ex span 을 클릭
+              console.log(event.currentTarget); //이벤트 실행되는 대상
+              this.message = "이벤트 실행 target:" + event.target;
+            }
+          },
+          alertExcute: function () {
+            alert("이벤핸들러 복수 등록");
+          },
+        },
+      });
+    </script>
+    <script>
+      new Vue({
+        el: "#app",
+        methods: {
+          warn: function (message, event) {
+            if (event) {
+              console.log(event.target);
+              console.log(event.currentTarget);
+              //이벤트 중지
+              event.preventDefault();
+            }
+            alert(message);
+          },
+        },
+      });
+    </script>
+  </body>
+</html>

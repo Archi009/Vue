@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <ul>
+        <li v-for="(item,index) in dataList">
+          {{item}}
+          <button @click="changeNum(item)">변경</button>
+          <button @click="del1(item,index)">삭제</button>
+        </li>
+      </ul>
+      <button @click="sum1">추가</button>
+      <button @click="sort1">역정렬</button>
+      <button @click="multi">구구단 보이기</button>
+      <div v-if="showL">
+        <p v-for="m in 10">{{n}} x {{m}}={{n*m}}</p>
+      </div>
+    </div>
+    <script>
+      new Vue({
+        el: "#app",
+        data: {
+          n: 2,
+          dataList: [2, 3, 4, 5, 6, 7, 8, 9],
+          showL: false,
+        },
+        methods: {
+          multi: function () {
+            // if (this.showL == false) {
+            //   this.showL = true;
+            // } else {
+            //   this.showL = false;
+            // }
+            return this.showL == true
+              ? (this.showL = false)
+              : (this.showL = true);
+          },
+          sum1: function () {
+            let sum = this.n++;
+            // dataList.push(sum);
+          },
+          changeNum: function (f) {
+            this.n = f;
+          },
+          del1: function (item, index) {
+            // this.dataList.splice(index, 1);
+            if (item == this.n) {
+              this.n = 0;
+            }
+            this.dataList = this.dataList.filter((val) => {
+              return item != val;
+            });
+          },
+          sort1: function () {},
+        },
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <title>Document</title>
+  </head>
+
+  <body>
+    <div id="yedam">
+      <select v-model="myColor">
+        <option disabled value="">선택</option>
+        <option>red</option>
+        <option>green</option>
+        <option>blue</option>
+        <option>orange</option>
+        <option>brown</option>
+        <option>1111</option>
+        <!--문자형식으로 들어가게 됨-->
+      </select>
+      <!--문자형식으로 들어가므로 +1을 하면 그냥 붙어버림-->
+      <p v-bind:style="{color:myColor}">선택한 색상은 {{myColor+1}} 입니다.</p>
+      <br />
+      <hr />
+      <br />
+      <!-- 다중선택 select -->
+      <select v-model="myColors" multiple sytle="width:150px;">
+        <option>red</option>
+        <option>green</option>
+        <option>blue</option>
+        <option>orange</option>
+        <option>brown</option>
+      </select>
+      <p>선택한 색은 {{myColors}}입니다.</p>
+      <br />
+    </div>
+    <script>
+      new Vue({
+        el: "#yedam",
+        data: {
+          myColor: "",
+          myColors: [],
+        },
+      });
+    </script>
+  </body>
+</html>
