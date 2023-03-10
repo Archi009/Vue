@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <!-- new Vue -->
+      <input v-model="name" />
+      <name-component :today="200+15" :my-name="name"></name-component>
+
+      <!-- dataList안에 있는 today,myName을 자식 컴포넌트에 binding -->
+
+      <name-component v-bind="dataList"></name-component>
+      <name-component my-name="또치" :today="100"></name-component>
+      <name-component my-name="12.5"></name-component>
+    </div>
+    <script>
+      const component = {
+        template: `<p>{{today+1}}, 나는 {{myName}}입니다.</p>`,
+        props: {
+          myName: String,
+          today: {
+            type: Number,
+            default: -1,
+          },
+        },
+      };
+      new Vue({
+        el: "#app",
+        data: {
+          name: "",
+          array: {
+            myName: 22,
+            today: 205,
+          },
+        },
+        computed: {
+          dataList: function () {
+            return {
+              myName: this.name,
+              today: Date.now(),
+            };
+          },
+        },
+        components: {
+          "name-component": component,
+        },
+      });
+    </script>
+  </body>
+</html>

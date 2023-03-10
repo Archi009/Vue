@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <!-- 리터럴(정적, 변화하지 않는) 속성 -->
+      <my-component text="World"></my-component>
+    </div>
+    <script>
+      const MyComponent = {
+        template: `<div>{{text}}!!</div>`,
+        //props 로 데이터 사용 선언을 해 줘야 사용가능...............
+        props: ["text"],
+      };
+      new Vue({
+        el: "#app",
+        data: {
+          aaa: 0,
+        },
+        components: {
+          "my-component": MyComponent,
+        },
+      });
+    </script>
+
+    <!-- 동적(변화하는) 속성 -->
+    <div id="app2">
+      <!-- 리터럴(정적, 변화하지 않는) 속성 -->
+      <my-component :text="message"></my-component>
+    </div>
+    <script>
+      const MyComponent2 = {
+        template: `<div>안녕 {{text}}!!</div>`,
+        props: ["text"],
+      };
+      new Vue({
+        el: "#app2",
+        // data() {
+        //   return {
+        //     message: "부모 컴포넌트로 부터",
+        //   };
+        // },
+        data: {
+          message: "부모",
+        },
+        components: {
+          "my-component": MyComponent2,
+        },
+      });
+    </script>
+
+    <div id="app3">
+      <my-component></my-component>
+    </div>
+    <script>
+      //props 를 사용하지 않고 변수 선언을 해서 사용하는 방식
+      const counter = { counter: 0 }; //전력 변수 선언
+      const MyComponent3 = {
+        template: `<div><button v-on:click='counter+=1'>
+                  {{counter}}
+                  </button>
+                  </div>`,
+        data() {
+          return counter;
+        },
+      };
+      new Vue({
+        el: "#app3",
+        components: { "my-component": MyComponent3 },
+        data() {
+          return {
+            message: "",
+          };
+        },
+      });
+    </script>
+    <!-- 
+
+
+
+
+
+ -->
+
+    <div id="app4">
+      <my-component
+        :num="Mynumber"
+        :str="passedString"
+        :even="Mynumber"
+        :obj="passedObject"
+      ></my-component>
+    </div>
+    <script>
+      const MyComponent4 = {
+        //유효성 검사.
+        template: `<div>숫자:{{num}} <br>문자열 :{{str}} <br>
+      짝수? :{{even}} <br> 객체:{{obj.message}}`,
+        props: {
+          num: {
+            //숫자 검증: 반드시 존재해야한다.
+            type: Number, //num숫자 입력하는 데이터
+            required: true, //required 반드시 데이터가 입력 되야 한다.
+          },
+          str: {
+            //문자 검증
+            type: String,
+            default: "안녕", //str 에 데이터가 없을 시 default 사용
+          },
+          obj: {
+            type: Object,
+            default: () => {
+              return { message: "안녕 객체로 부터" };
+            },
+          },
+          even: {
+            //커스텀 검사
+            validator: (value) => {
+              return value % 2 === 0;
+            },
+          },
+        },
+      };
+      new Vue({
+        el: "#app4",
+        components: { "my-component": MyComponent4 },
+        data() {
+          return {
+            passedString: "안녕 부모로 부터!",
+            Mynumber: 45,
+            passedObject: { message: "넘겨준 객체" },
+          };
+        },
+      });
+    </script>
+  </body>
+</html>

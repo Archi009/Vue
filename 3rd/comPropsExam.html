@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>컴포넌트를 숫자로 출력</h1>
+    <div id="app">
+      <my-compo v-for="n in 10" :status="n"></my-compo>
+    </div>
+    <br /><br /><br /><br /><br />
+    <script>
+      const MyComponent = {
+        template: `<p>{{status}} 입니다</p>`,
+        //props:['']
+        props: {
+          status: Number,
+        },
+        created: function () {
+          //Vue인스턴스 생성 후 실행
+          if (this.status % 2 == 0) {
+            this.status = this.status + "짝수";
+          } else {
+            this.status = this.status + "홀수";
+          }
+        },
+      };
+      new Vue({
+        el: "#app",
+        data: {},
+        components: {
+          "my-compo": MyComponent,
+        },
+      });
+    </script>
+
+    <!--  -->
+    <div id="app2">
+      <my-compo v-for="(item,index) in myArray" :my-name="item"></my-compo>
+    </div>
+    <br /><br /><br /><br /><br />
+    <script>
+      const MyComponent2 = {
+        template: `<p>{{myText}} 입니다</p>`,
+        //props:['']
+        props: ["myName"],
+        created: function () {
+          //Vue인스턴스 생성 후 실행
+          if (this.myName % 2 == 0) {
+            this.myText = this.myName + "짝수";
+          } else {
+            this.myText = this.myName + "홀수";
+          }
+        },
+      };
+      new Vue({
+        el: "#app2",
+        data: {
+          myArray: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+        },
+        components: {
+          "my-compo": MyComponent2,
+        },
+      });
+    </script>
+    <!--  -->
+    <div id="app3">
+      <my-compo v-for="(item,index) in myArray" :my-name="item"></my-compo>
+    </div>
+    <script>
+      const MyComponent3 = {
+        template: `<p>{{myText}} 입니다</p>`,
+        //props:['']
+        props: ["myName"],
+        computed: {
+          myText: function () {
+            //Vue인스턴스 생성 후 실행
+            if (this.myName % 2 == 0) {
+              return (this.myText = this.myName + "짝수");
+            } else {
+              return (this.myText = this.myName + "홀수");
+            }
+          },
+        },
+      };
+      new Vue({
+        el: "#app3",
+        data: {
+          myArray: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+        },
+        components: {
+          "my-compo": MyComponent3,
+        },
+      });
+    </script>
+  </body>
+</html>

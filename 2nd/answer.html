@@ -56,10 +56,19 @@
             this.isWritavle = false;
             this.limitTime = this.setTime;
             //뷰 본인 자신을 가르키는 this를 vueObj에 넣어 줌.
+            //아래의 this는 객체 (new Vue)를 뜻한다
+            console.log(this);
             const vueObj = this;
             this.timerObj = setInterval(function () {
+              //setInterval의 콜백 함수내부에서 this 를 불러 내면 window를 뜻한다
+              //따라서 아래 vueObj.limitTime-- 은 this.limitTime--과 다른 말 이다
+              console.log(this);
               vueObj.limitTime--;
             }, 1000);
+            test();
+            function test() {
+              console.log(this);
+            }
           },
         },
         watch: {

@@ -12,7 +12,9 @@
       <h1>제한 시간내에 문자 입력하기</h1>
       <label>
         금지 문자(,로 나누어 복수입력가능)
-        <input type="text" v-bind:disabled="on" v-model="banned" /> </label
+        <!-- v-bind:속성 은  :속성으로 줄여서 쓸 수 있다. -->
+        <!-- v-on:기능 은 @기능으로 줄여 쓸 수 있다. -->
+        <input type="text" :disabled="on" v-model="banned" /> </label
       ><br />
       <label>
         제한시간을 입력하세요(초)
@@ -21,7 +23,12 @@
       </label>
       <br />
       <p>남은시간: {{reSec}}</p>
-      <textarea v-model="inputText" cols="30" rows="10"></textarea>
+      <textarea
+        v-model="inputText"
+        cols="30"
+        rows="10"
+        v-bind:disabled="!on"
+      ></textarea>
       <p>{{countT}}개의 문자를 입력 하였습니다</p>
       <p>별점 : {{countR}}(금지문자 1개당 12점)</p>
     </div>
@@ -29,61 +36,125 @@
       new Vue({
         el: "#app",
         data: {
-          reSec: 0,
           on: false,
-          timerObj: "",
           banned: "",
           secSelceted: 0,
-          countT: 0,
-          countR: 0,
+          reSec: 0,
           inputText: "",
-          pos: "",
+          countT: 0,
+          countF: 0,
+
+          //
+          timeObj: null,
         },
-        // computed: {
-        //   countR: function () {
-        //     return this.inputText.length;
-        //   },
-        // },
         methods: {
           submit: function () {
-            clearInterval(this.timerObj); //
+            //최초 인터벌 초기화
+            clearInterval(this.timeObj);
+            //입력한 시간 값을 설정할 시간 값에 넣는다 왜 따로 넣는가? 같은 변수를 쓰면
+            //입력한 시간의 위치에서도 함께 변하기 때문이다.
             this.reSec = this.secSelceted;
-            this.timerObj = setInterval(() => {
+            //setInterval 함수는 고유한 값을 반환하기 때문에 새로운 값을 계속해서 뱉어 낸다.
+            //seInterval의 값을 timeObj에 담는다.
+            this.timeObj = setInterval(() => {
+              //1000*1/1000 초마다 this.reSec의 값을 1씩 빼겠다
               this.reSec--;
             }, 1000);
-
+            //textarea 내부의 값을 비운다.
+            this.inputText = "";
+            //입력버튼과 인풋태그를 비활성화 하고 textarea를 활성화 시킨다
             this.on = true;
           },
         },
         watch: {
-          inputText: function () {
-            // var strCopy = this.banned.split(",");
-            // strCopy.forEach((item) => {
-            //   let pos = this.inputText.match(item);
-            //   if(pos!=null){
-            //     alert(this.pos+"는 금지어입니다.")
-            //     this.inputText=this.inputText.
-            //   }
-            // });
-            var pos = this.inputText.indexOf(this.banned);
-            if (pos >= 0) {
-              alert(this.banned + "는 입력할 수 없습니다.");
-              this.inputText = this.inputText.substr(0, pos);
-              this.reSec += 10;
-              this.countR += 12;
-              this.countR = this.inputText.length;
-            }
-          },
           reSec: function () {
             if (this.reSec <= 0) {
-              alert("제한시간이 다 됐습니다");
-              clearInterval(this.timerObj);
+              alert("제한시간에 도달 했습니다.");
+              clearInterval(this.timeObj);
               this.on = false;
-              this.rate = 0;
+              this.countT = this.inputText.length;
+            }
+          },
+          inputText: function () {
+            let selected = this.banned.split(",");
+            for (let i = 0; i < selected.length; i++) {
+              let keyword = selected[i];
+              let point = this.inputText.indexOf(keyword);
+              let matchWord = this.inputText.match(keyword);
+              if (point > -1) {
+                alert(matchWord + "는 입력 할 수 없습니다.");
+                this.reSec += 10;
+                this.countF++;
+                this.inputText = this.inputText.substr(0, point);
+              }
             }
           },
         },
+        computed: {
+          countR: function () {
+            return this.countF * 12;
+          },
+        },
       });
+
+      // new Vue({
+      //   el: "#app",
+      //   data: {
+      //     reSec: 0,
+      //     on: false,
+      //     timerObj: "",
+      //     banned: "",
+      //     secSelceted: 0,
+      //     countT: 0,
+      //     countR: 0,
+      //     inputText: "",
+      //     pos: "",
+      //   },
+      //   // computed: {
+      //   //   countR: function () {
+      //   //     return this.inputText.length;
+      //   //   },
+      //   // },
+      //   methods: {
+      //     submit: function () {
+      //       clearInterval(this.timerObj); //
+      //       this.reSec = this.secSelceted;
+      //       this.timerObj = setInterval(() => {
+      //         this.reSec--;
+      //       }, 1000);
+
+      //       this.on = true;
+      //     },
+      //   },
+      //   watch: {
+      //     inputText: function () {
+      //       // var strCopy = this.banned.split(",");
+      //       // strCopy.forEach((item) => {
+      //       //   let pos = this.inputText.match(item);
+      //       //   if(pos!=null){
+      //       //     alert(this.pos+"는 금지어입니다.")
+      //       //     this.inputText=this.inputText.
+      //       //   }
+      //       // });
+      //       var pos = this.inputText.indexOf(this.banned);
+      //       if (pos >= 0) {
+      //         alert(this.banned + "는 입력할 수 없습니다.");
+      //         this.inputText = this.inputText.substr(0, pos);
+      //         this.reSec += 10;
+      //         this.countR += 12;
+      //         this.countR = this.inputText.length;
+      //       }
+      //     },
+      //     reSec: function () {
+      //       if (this.reSec <= 0) {
+      //         alert("제한시간이 다 됐습니다");
+      //         clearInterval(this.timerObj);
+      //         this.on = false;
+      //         this.rate = 0;
+      //       }
+      //     },
+      //   },
+      // });
     </script>
   </body>
 </html>
