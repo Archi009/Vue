@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/vue-router@3.0.0/dist/vue-router.js"></script>
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <!-- 기본값 a태그 -->
+      <router-link to="/main">main</router-link>
+      <!-- button -->
+      <router-link tag="button" to="/info">info</router-link>
+      <router-link tag="li" to="/tagtest">test</router-link>
+      <router-link to="{name:'userInfo'}">UserInfo</router-link>
+      <router-link tag="button" :to="{name:'user',params : {username:'erina'}}"
+        >buttonParam</router-link
+      >
+
+      <!--라우터를 통한 컴포넌트가 출력되는 곳-->
+      <router-view> </router-view>
+    </div>
+    <script>
+      const mainComponent = {
+        template: `<div><h1>메인 페이지 </h1></div>`,
+      };
+      const infoComponent = {
+        template: `<div><h1>정보 페이지 </h1></div>`,
+      };
+      const testComponent = {
+        template: `<div><h1>test 페이지 </h1></div>`,
+      };
+
+      const router = new VueRouter({
+        routes: [
+          {
+            path: "/main",
+            component: mainComponent,
+          },
+          {
+            path: "/info",
+            component: infoComponent,
+          },
+          {
+            path: "/tagtest",
+            component: testComponent,
+          },
+          {
+            path: "/userInfo/:id/pwd/:pwd",
+            name: "userInfo", //위의 패스를 쓰면 개인정보 노출이기 때문에 별칭을 사용한다
+            component: {
+              template: `<div>user{{this.$route.params.id}}<br>
+                              pwd {{this.$route.params.pwd}}</div>`,
+              //but 정보가 아무것도 없어서 출력이 null 임
+            },
+          },
+          {
+            path: "/users/:'username'",
+            name: "user",
+            component: {
+              template: `<div>
+                <p>유저 정보 : {{this.$route.params.username}}</p></div>`,
+              props: ["username"],
+            },
+            //route 옵션에서 props로 데이터를 받아ㄹ올 수 있도록 설정
+            props: true,
+          },
+        ],
+      });
+
+      new Vue({
+        el: "#app",
+        router: router,
+      });
+    </script>
+  </body>
+</html>
