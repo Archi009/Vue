@@ -1,9 +1,16 @@
 <template>
   <nav>
     <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
+    <router-link to="/about">About</router-link> |
+    <router-link to="/computedExam">computed</router-link> |
+    <router-link to="/DataBinding">DataBinding</router-link> |
+    <router-link to="/EventClick">EventClick</router-link> |
+    <router-link to="/jinju">jinju</router-link> |
+    <router-link to="/gimhae">gimhae</router-link> |
+    <router-link to="/movie">movie</router-link> |
+    <router-link to="/phd">seoulSky</router-link>
   </nav>
-  <router-view/>
+  <router-view />
 </template>
 
 <style>

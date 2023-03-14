@@ -32,7 +32,7 @@ export default {
     boardDelete: function (no) {
       for (let i = 0; i < this.object.length; i++) {
         if (this.object[i].no == no) {
-          this.object.spice(i, 1);
+          this.object.splice(i, 1);
         }
       }
 

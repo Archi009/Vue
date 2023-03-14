@@ -1,7 +1,44 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
+import compu from "../components/ComputedExam.vue";
+import DataBinding from "../components/DataBindingList";
+import eventClick from "../components/EventClick.vue";
+import jinju from "../components/JinjuExam.vue";
+import gimhae from "../components/GimHae.vue";
+import movie from "../components/MovieLi.vue";
+import phd from "../components/SeoulPh.vue";
 
 const routes = [
+  {
+    path: "/phd",
+    name: "phd",
+    component: phd,
+  },
+  {
+    path: "/movie",
+    name: "movie",
+    component: movie,
+  },
+  {
+    path: "/gimhae",
+    name: "gimhae",
+    component: gimhae,
+  },
+  {
+    path: "/jinju",
+    name: "jinju",
+    component: jinju,
+  },
+  {
+    path: "/EventClick",
+    name: "EventClick",
+    component: eventClick,
+  },
+  {
+    path: "/DataBinding",
+    name: "DataBinding",
+    component: DataBinding,
+  },
   {
     path: "/",
     name: "home",
@@ -17,6 +54,11 @@ const routes = [
 
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/AboutView.vue"),
+  },
+  {
+    path: "/computedExam",
+    name: "computedExam",
+    component: compu,
   },
 ];
 

@@ -25,6 +25,7 @@ export default {
           .then((data) => {
             // this.dataArray = data;
             //dataArray는 부모의 변수이므로
+            console.log(data["board"]);
             this.parentData.dataArray = data;
             // if (this.dataArray != null && this.dataArray["board"].length > 0) {
             //   this.listOk = true;
